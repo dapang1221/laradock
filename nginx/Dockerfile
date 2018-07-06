@@ -2,6 +2,10 @@ FROM nginx:alpine
 
 LABEL maintainer="Mahmoud Zalt <mahmoud@zalt.me>"
 
+ARG TZ=${WORKSPACE_TIMEZONE}
+RUN apk update && apk add curl bash tree tzdata \
+    && cp -r -f /usr/share/zoneinfo/$TZ /etc/localtime
+
 COPY nginx.conf /etc/nginx/
 
 # If you're in China, or you need to change sources, will be set CHANGE_SOURCE to true in .env.
